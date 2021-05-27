@@ -45,7 +45,7 @@ export default {
                 formData.append("file", image);
                 formData.append('title',this.title);
                 formData.append("description",this.description);
-                let res = await axios.post('api/posts/create',formData);
+                let res = await axios.post('https://dino-back.herokuapp.com/api/posts/create',formData);
                 if(res.data.data.status == 200){
                     this.$emit('created')
                 }else{
@@ -63,7 +63,7 @@ export default {
                 formData.append('id',this.post._id);
                 formData.append('title',this.title);
                 formData.append("description",this.description);
-                let res = await axios.post('api/posts/update',formData);
+                let res = await axios.post('https://dino-back.herokuapp.com/api/posts/update',formData);
                 if(res.data.data.status == 200){
                     this.$emit('updated')
                 }else{

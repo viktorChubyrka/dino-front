@@ -21,18 +21,18 @@ export default {
     },
     methods:{
         async getUsers(){
-            let users = await axios.get('api/users/get_all_users');
+            let users = await axios.get('https://dino-back.herokuapp.com/api/users/get_all_users');
             this.users = users.data;
         },
         async deleteUser(id){
-            await axios.post('api/users/delete', {id});
+            await axios.post('https://dino-back.herokuapp.com/api/users/delete', {id});
             this.getUsers();
         },
         async blockUser(id){
-            await axios.post('api/users/block', {id});
+            await axios.post('https://dino-back.herokuapp.com/api/users/block', {id});
             this.getUsers();
         },async setSuperuser(id){
-            await axios.post('api/users/set_superuser', {id});
+            await axios.post('https://dino-back.herokuapp.com/api/users/set_superuser', {id});
             this.getUsers();
         },
     },
