@@ -1,11 +1,11 @@
 <template>
     <div class="header">
-        <div v-if="!user.isBlocked" @click="goTo('')" :class="{'nav-link':true,'active':isActive('home')}">Головна</div>
-        <div v-if="!user.isBlocked" @click="goTo('atlas')" :class="{'nav-link':true,'active':isActive('atlas')}">Атлас</div>
-        <div v-if="!user.isBlocked" @click="goTo('vocabulary')" :class="{'nav-link':true,'active':isActive('vocabulary')}">Словник</div>
-        <div  v-if="!user.isBlocked" @click="goTo('about')" :class="{'nav-link':true,'active':isActive('about')}">Про автора</div>
-        <div v-if="user.isSuperuser" @click="goTo('users')" :class="{'nav-link':true,'active':isActive('users')}">Користувачі</div>
-        <div @click="logOut()" class="nav-link">Вихід</div>
+        <div v-if="user && !user.isBlocked  || !user" @click="goTo('')" :class="{'nav-link':true,'active':isActive('home')}">Головна</div>
+        <div v-if="user && !user.isBlocked || !user" @click="goTo('atlas')" :class="{'nav-link':true,'active':isActive('atlas')}">Атлас</div>
+        <div v-if="user && !user.isBlocked || !user" @click="goTo('vocabulary')" :class="{'nav-link':true,'active':isActive('vocabulary')}">Словник</div>
+        <div v-if="user && !user.isBlocked || !user" @click="goTo('about')" :class="{'nav-link':true,'active':isActive('about')}">Про автора</div>
+        <div v-if="user && user.isSuperuser" @click="goTo('users')" :class="{'nav-link':true,'active':isActive('users')}">Користувачі</div>
+        <div @click="logOut()" class="nav-link">{{user?"Вихід":"Увійти"}}</div>
     </div>
 </template>
 <script>
@@ -18,8 +18,12 @@ export default {
             return link == this.$route.name
         },
         logOut(){
-            localStorage.removeItem('user');
-            this.$router.push('/login')
+            if(this.user){
+                localStorage.removeItem('user');
+                this.$router.push('/login')
+            }else{
+                this.$router.push('/login')
+            }
         }
        
     },

@@ -1,24 +1,32 @@
 <template>
     <div>
-        <div class="background-with-image"></div>
-        <div class="blur-container ">
-            <div class="page-head mb-20"> <h1 >Атлас</h1> <span v-if="user.isSuperuser" @click="create_post=!create_post" class="create-post">Створити статтю</span></div>
-            <CreatePostForm class="mb-10" @created="create_post=false,getAllPosts()" @fail="create_post=false" v-if="create_post"/>
-            <input v-model="filter" type="text" class="search mb-20" placeholder="Пошук">
-            <div class="sorting-container">
-                <div class="sort-btn-container">
-                    <button class="dino-btn mb-10" @click="sortByAlphabetDown()">В алфавітному порядку</button>
-                    <button class=" dino-btn mb-10" @click="sortByAlphabetUp()">Проти алфавітного порядку</button>
+        <div v-if="user && !user.isBlocked || !user">
+            <div class="background-with-image"></div>
+            <div class="blur-container ">
+                <div class="page-head mb-20"> <h1 >Атлас</h1> <span v-if="user && user.isSuperuser" @click="create_post=!create_post" class="create-post">Створити статтю</span></div>
+                <CreatePostForm class="mb-10" @created="create_post=false,getAllPosts()" @fail="create_post=false" v-if="create_post"/>
+                <input v-model="filter" type="text" class="search mb-20" placeholder="Пошук">
+                <div class="sorting-container">
+                    <div class="sort-btn-container">
+                        <button class="dino-btn mb-10" @click="sortByAlphabetDown()">В алфавітному порядку</button>
+                        <button class=" dino-btn mb-10" @click="sortByAlphabetUp()">Проти алфавітного порядку</button>
+                    </div>
+                    <div class="sort-btn-container">
+                        <button class=" dino-btn mb-10" @click="sortByDateDown()">За зростанням дати</button>
+                        <button class=" dino-btn mb-10" @click="sortByDateUp()">За спаданням дати</button>
+                    </div>
                 </div>
-                <div class="sort-btn-container">
-                    <button class=" dino-btn mb-10" @click="sortByDateDown()">За зростанням дати</button>
-                    <button class=" dino-btn mb-10" @click="sortByDateUp()">За спаданням дати</button>
+                
+                <div @click="goToPost(post._id)" v-for="post in filteredPosts" :key="post._id" class="mb-20 post-item">
+                    <img :src="post.imageUrl" alt="">
+                    <h2 class="title">{{post.title}}</h2>
                 </div>
             </div>
-            
-            <div @click="goToPost(post._id)" v-for="post in filteredPosts" :key="post._id" class="mb-20 post-item">
-                <img :src="post.imageUrl" alt="">
-                <h2 class="title">{{post.title}}</h2>
+        </div>
+        <div v-else>
+            <div class="background-with-image"></div>
+            <div  class="blur-container">
+                <h1 style="text-align:center">Ваш аккаунт заблоковано!!!</h1>
             </div>
         </div>
     </div>
@@ -38,12 +46,6 @@ export default {
     },
     components:{CreatePostForm},
     created(){
-        let user = JSON.parse(localStorage.getItem('user'));
-        if(user){
-        this.$store.commit('setUser',user);
-        }else{
-        this.$router.push('/login')
-        }
         this.getAllPosts();
     },
     computed:{

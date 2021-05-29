@@ -5,10 +5,10 @@
             <img class="mb-20 image" :src="post.imageUrl" alt="">
             <h1 class="mb-10">{{post.title}}</h1>
             <h4 class="mb-20">{{post.bodyText}}</h4>
-            <button v-if="user.isSuperuser" @click="post_modal_active=true" class="delete">Редагувати статтю</button>
+            <button v-if="user && user.isSuperuser" @click="post_modal_active=true" class="delete">Редагувати статтю</button>
             <div class="comment-block">
-                <h2>Коментарії</h2>
-                <div>
+                <h2 v-if="post.comments">Коментарії</h2>
+                <div v-if="user">
                     <textarea v-model="comment" class="comment-body" name="" id="" cols="30" rows="10"></textarea>
                     <button @click="commentPost()" class="comment dino-btn mb-20">Коментувати</button>
                 </div>
@@ -17,7 +17,7 @@
                         <h3>{{comment.nickname}}</h3>
                         <h5>{{comment.comment}}</h5>
                     </div>
-                    <button @click="deleteComment(comment.date)" v-if="user.isSuperuser" class="delete"> Видалити</button>
+                    <button @click="deleteComment(comment.date)" v-if="user && user.isSuperuser" class="delete"> Видалити</button>
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="background-with-image"></div>
-        <div v-if="!user.isBlocked" class="blur-container">
+        <div v-if="user && !user.isBlocked || !user" class="blur-container">
             <h1 class="mb-20">Неймовірні тварини</h1>
             <h4 class="mb-20 strong">Близько 240 млн років тому, задовго до появи людини,
                 на Землі з'явилася нова група наземних хребетних
@@ -44,14 +44,6 @@
 </template>
 <script>
 export default {
-    created(){
-    let user = JSON.parse(localStorage.getItem('user'));
-    if(user){
-       this.$store.commit('setUser',user);
-    }else{
-      this.$router.push('/login')
-    }
-  },
   computed:{
         user(){
             return this.$store.getters.user;

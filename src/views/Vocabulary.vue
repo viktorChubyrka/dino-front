@@ -1,22 +1,30 @@
 <template>
     <div>
-        <div class="background-with-image"></div>
-        <div class="blur-container">
-            <h1 class="mb-20">Словник</h1>
-            <div v-if="user.isSuperuser" class="add-word-form">
-                <div>
-                    <h3>Слово</h3>
-                    <input v-model="word" type="text">
+        <div v-if="user && !user.isBlocked || !user">
+            <div class="background-with-image"></div>
+            <div class="blur-container">
+                <h1 class="mb-20">Словник</h1>
+                <div v-if="user && user.isSuperuser" class="add-word-form">
+                    <div>
+                        <h3>Слово</h3>
+                        <input v-model="word" type="text">
+                    </div>
+                    <div>
+                        <h3>Значення слова</h3>
+                        <textarea v-model="description" name="" id="" cols="30" rows="10"></textarea>
+                    </div>
+                    <button @click="addWord()">Додати слово</button>
                 </div>
-                <div>
-                    <h3>Значення слова</h3>
-                    <textarea v-model="description" name="" id="" cols="30" rows="10"></textarea>
+                    
+                <div v-for="word in words" :key="word._id" class="mb-10 vocabulary-item">
+                    <h3 class="word">{{word.word}}</h3> - <h4 class="description">{{word.description}}</h4> <button @click="deleteWord(word._id)" style="float:right">Видалити</button>
                 </div>
-                <button @click="addWord()">Додати слово</button>
             </div>
-                
-            <div v-for="word in words" :key="word._id" class="mb-10 vocabulary-item">
-                <h3 class="word">{{word.word}}</h3> - <h4 class="description">{{word.description}}</h4> <button @click="deleteWord(word._id)" style="float:right">Видалити</button>
+        </div>
+         <div v-else>
+            <div class="background-with-image"></div>
+            <div  class="blur-container">
+                <h1 style="text-align:center">Ваш аккаунт заблоковано!!!</h1>
             </div>
         </div>
     </div>
@@ -48,12 +56,6 @@ export default {
         }
     },
     created(){
-          let user = JSON.parse(localStorage.getItem('user'));
-        if(user){
-        this.$store.commit('setUser',user);
-        }else{
-        this.$router.push('/login')
-        }
         this.getWords();
     },
     computed:{

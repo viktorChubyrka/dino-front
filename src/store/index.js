@@ -5,11 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user:{
-      email:'',
-      isBlocked:false,
-      nickname:''
-    }
+    user:null
   },
   getters:{
     user:(state)=>{

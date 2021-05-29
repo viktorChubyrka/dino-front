@@ -10,13 +10,6 @@
 </template>
 <script>
 export default {
-    created(){
-    let user = JSON.parse(localStorage.getItem('user'));
-    if(user){
-       this.$store.commit('setUser',user);
-    }else{
-      this.$router.push('/login')
-    }
-  },
+    
 }
 </script>

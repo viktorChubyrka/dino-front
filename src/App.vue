@@ -10,16 +10,7 @@ export default {
   components:{
     Header
   },
-  created(){
-    let user = JSON.parse(localStorage.getItem('user'));
-    if(user){
-       this.$store.commit('setUser',user);
-       this.$router.push('/')
-    }
-    else{
-      this.$router.push('/login')
-    }
-  },
+  
   computed:{
     isUserAutorizated(){
       return this.$route.name != 'register' && this.$route.name != 'login'
