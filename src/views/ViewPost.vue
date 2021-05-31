@@ -44,15 +44,15 @@ export default {
     },
     methods:{
          async getPost(){
-            let post = await axios.get('https://dino-back.herokuapp.com/api/posts/post'+this.$route.params.id);
+            let post = await axios.get('/api/posts/post'+this.$route.params.id);
             this.post = post.data;
         },
         async commentPost(){
-            await axios.post('https://dino-back.herokuapp.com/api/posts/comment', {id:this.$route.params.id,nickname:this.user.nickname,comment:this.comment});
+            await axios.post('/api/posts/comment', {id:this.$route.params.id,nickname:this.user.nickname,comment:this.comment});
             this.getPost();
         },
         async deleteComment(date){
-            await axios.post('https://dino-back.herokuapp.com/api/posts/delete_comment', {date,id:this.$route.params.id});
+            await axios.post('/api/posts/delete_comment', {date,id:this.$route.params.id});
             this.getPost();
         },
         async updatePost(){

@@ -62,7 +62,7 @@ export default {
     },
     methods:{
         async getAllPosts(){
-            let posts = await axios.get('https://dino-back.herokuapp.com/api/posts/all_posts');
+            let posts = await axios.get('/api/posts/all_posts');
             this.posts = posts.data.reverse();
         },
         goToPost(postId){

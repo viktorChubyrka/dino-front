@@ -41,16 +41,16 @@ export default {
     },
     methods:{
         async getWords(){
-            let words = await axios.get('https://dino-back.herokuapp.com/api/vocabulary/words');
+            let words = await axios.get('/api/vocabulary/words');
             this.words = words.data;
         },
         async deleteWord(id){
-            await axios.post('https://dino-back.herokuapp.com/api/vocabulary/delete', {id});
+            await axios.post('/api/vocabulary/delete', {id});
             this.getWords();
         },
         async addWord(){
             if(this.words && this.description) {
-                await axios.post('https://dino-back.herokuapp.com/api/vocabulary/add', {word:this.word,description:this.description});
+                await axios.post('/api/vocabulary/add', {word:this.word,description:this.description});
                 this.getWords();
             }
         }
