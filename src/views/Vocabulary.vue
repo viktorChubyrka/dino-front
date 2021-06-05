@@ -17,7 +17,7 @@
                 </div>
                     
                 <div v-for="word in words" :key="word._id" class="mb-10 vocabulary-item">
-                    <h3 class="word">{{word.word}}</h3> - <h4 class="description">{{word.description}}</h4> <button @click="deleteWord(word._id)" style="float:right">Видалити</button>
+                    <h3 class="word">{{word.word}}</h3> - <h4 class="description">{{word.description}}</h4> <button v-if="user && user.isSuperuser" @click="deleteWord(word._id)" style="float:right">Видалити</button>
                 </div>
             </div>
         </div>
